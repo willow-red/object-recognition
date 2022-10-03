@@ -1,0 +1,71 @@
+@font-face{
+  font-family: "AppleGaramond";
+  src: url("img/AppleGaramond.ttf");
+}
+body{
+  background-color: black;
+  background-image: url("img/star.png");
+  font-family: "AppleGaramond", serif;
+}
+#mainWindow{
+  display: block;
+  position: relative;
+  margin: 30px auto;
+  z-index: 1;
+  background-color: none;
+  width: 1003px;
+  height: 707px;
+  background-image: url("img/main.png");
+}
+#loading{
+  position: absolute;
+  z-index: 2;
+  top: 59px;
+  left: 215px;
+}
+#canvasWindow{
+  z-index: 2;
+  position: absolute;
+  top: 120px;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 656px;
+  height: 538px;
+  background-image: url("img/vidFrame.png");
+}
+#canvasDiv{
+  z-index: 3;
+  position: absolute;
+  top: 50px;
+  left: 8px;
+}
+#globeWindow{
+  background-image: url("img/globeFrame.png");
+  width: 160px;
+  height: 185px;
+  z-index: 2;
+  position: absolute;
+  right: -25px;
+  top: 60px;
+}
+#globe{
+  display: block;
+  margin: 15px auto;
+}
+#prog{
+  display: block;
+  margin: 0px auto;
+}
+#info{
+  position: absolute;
+  left: -100px;
+  top: 250px;
+  background-image: url("img/dataWindow.png");
+  text-align: center;
+  font-size: 20px;
+  color: red;
+  width: 203px;
+  height: 203px;
+}

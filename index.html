@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>main system</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <!-- p5 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/p5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.0.0/addons/p5.sound.min.js"></script>
+    <!-- ml5 -->
+    <script src="https://unpkg.com/ml5@latest/dist/ml5.min.js"></script>
+  </head>
+
+  <body>
+    <div id="mainWindow">
+      <img id="loading" src="img/loading2r.gif" alt="loading bar">
+      <div id="canvasWindow">
+        <div id="canvasDiv">
+          <!-- Our sketch will go here! -->
+        </div>
+      </div>
+      <div id="info">
+        <p id="data">Object "<span id="object">null</span>" found <br> at (<span id="x">0</span>,<span id="y">0</span>)</p>
+        <img id="glass" src="img/cursorph.gif" alt="hourglass">
+      </div>
+      <div id="globeWindow">
+        <img id="globe" src="img/globe1.gif" alt="globe">
+        <img id="prog" src="img/DivinkLoading.gif" alt="progress bar">
+      </div>
+    </div>
+
+
+    <script>
+      // Your code will go here
+      // Copyright (c) 2020 ml5
+      //
+      // This software is released under the MIT License.
+      // https://opensource.org/licenses/MIT
+
+      /* ===
+      ml5 Example
+      Object Detection using COCOSSD
+      This example uses a callback pattern to create the classifier
+      === */
+
+      let video;
+      let detector;
+      let detections = [];
+      var label;
+      var cordX;
+      var cordY;
+      let fontRegular;
+      function preload() {
+        fontRegular = loadFont('img/AppleGaramond.ttf');
+      }
+
+      function setup() {
+        var cnv = createCanvas(640, 480);
+        video = createCapture(VIDEO);
+        video.size(640, 480);
+        video.hide();
+        textFont(fontRegular);
+        // Models available are 'cocossd', 'yolo'
+        detector = ml5.objectDetector('cocossd', modelReady);
+        cnv.parent("canvasDiv");
+      }
+
+      function gotDetections(error, results) {
+        if (error) {
+          console.error(error);
+        }
+        detections = results;
+        detector.detect(video, gotDetections);
+      }
+
+      function modelReady() {
+        detector.detect(video, gotDetections);
+      }
+
+      function draw() {
+        image(video, 0, 0);
+
+        for (let i = 0; i < detections.length; i++) {
+          let object = detections[i];
+          stroke(255, 0, 0);
+          strokeWeight(3);
+          noFill();
+          rect(object.x, object.y, object.width, object.height);
+          noStroke();
+          fill(255);
+          textSize(24);
+          text(object.label, object.x + 10, object.y + 25);
+          label = object.label;
+          cordX = parseInt(object.x);
+          cordY = parseInt(object.y);
+          document.querySelector("#object").innerHTML = label;
+          document.querySelector("#x").innerHTML = cordX;
+          document.querySelector("#y").innerHTML = cordY;
+        }
+      }
+
+      // open up your console - if everything loaded properly you should see the latest ml5 version
+      console.log('ml5 version:', ml5.version);
+
+    </script>
+  </body>
+</html>
